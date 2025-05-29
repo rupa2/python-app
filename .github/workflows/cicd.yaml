@@ -33,11 +33,28 @@ jobs:
           context: .
           push: true
           tags: devir2/python-app:${{ env.COMMIT_ID }}
+    outputs:
+      commit_id: ${{ env.COMMIT_ID }}
   cd:
     runs-on: self-hosted
     needs: ci
     steps:
-    
+      -
+        name: Checkout
+        uses: actions/checkout@v4
+      -
+        name: modify value file
+        shell: bash
+        run: |
+         echo ${{needs.ci.outputs.commit_id}}
+         pip install yq
+         yq -Yi '.image.tag = "${{needs.ci.outputs.commit_id}}"' charts/python-app/values.yaml
+      
+      - 
+        name: commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+           message: 'updatesd values file with commit ${{needs.ci.outputs.commit_id}}'
       -
         name: install argocd
         shell: bash
