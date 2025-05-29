@@ -1,4 +1,4 @@
-name: ci
+name: cicd
 
 on:
   push:
@@ -8,8 +8,8 @@ on:
       - main
 
 jobs:
-  docker:
-    runs-on: self-hosted
+  ci:
+    runs-on: ubuntu-latest
     steps:
       -
         name: Checkout
@@ -33,3 +33,21 @@ jobs:
           context: .
           push: true
           tags: devir2/python-app:${{ env.COMMIT_ID }}
+  cd:
+    runs-on: self-hosted
+    needs: ci
+    steps:
+    
+      - 
+        name: Argocd sync
+        shell: bash
+        run: |
+         argocd login argocd-server.argocd \
+         --insecure \
+         --grpc-web \
+         --username admin \
+         --password {{ secrets.ARGOCD_PASWORD }}
+         argocd app sync python-app
+         
+
+
