@@ -54,7 +54,8 @@ jobs:
         name: commit changes
         uses: EndBug/add-and-commit@v9
         with:
-           message: 'updatesd values file with commit ${{needs.ci.outputs.commit_id}}'
+           message: 'updated values file with commit ${{needs.ci.outputs.commit_id}}'
+
       -
         name: install argocd
         shell: bash
