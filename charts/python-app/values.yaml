@@ -2,7 +2,7 @@ replicaCount: 1
 image:
   repository: devir2/python-app
   pullPolicy: IfNotPresent
-  tag: v1
+  tag: 839d83
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
