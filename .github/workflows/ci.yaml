@@ -20,6 +20,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - 
+        name: Get Hash
+        shell: bash
+        run: |
+         echo "COMMIT_ID=${GITHUB_SHA::6}" >> "$GITHUB_ENV"
 
       -
         name: Build and push
@@ -27,4 +32,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: devir2/python-app:${{ github.sha }}
+          tags: devir2/python-app:${{ env.COMMIT_ID }}
