@@ -1,6 +1,6 @@
 replicaCount: 1
 image:
-  repository: rupa2/python-app
+  repository: devir2/python-app
   pullPolicy: IfNotPresent
   tag: v1
 imagePullSecrets: []
